@@ -14,7 +14,7 @@ void print_arguments(int argc, char *argv[]) {
 }
 
 void print_letters(char arg[], size_t len) {
-  int i;
+  size_t i;
 
   for(i = 0; i < len; i++) {
     char ch = arg[i];

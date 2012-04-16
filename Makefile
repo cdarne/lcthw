@@ -1,7 +1,10 @@
-CFLAGS=-Wall -g
-EX_FILES=ex14 ex15
+CC=clang
+CFLAGS=-W -Werror -g
+TARGET_FILES=ex14 ex15 ex16 ex16b
 
-all: $(EX_FILES)
+.PHONY: all clean
+
+all: $(TARGET_FILES)
 
 clean:
-	rm $(EX_FILES)
+	rm $(TARGET_FILES)
