@@ -23,7 +23,11 @@ struct Connection {
   struct Database *db;
 } conn;
 
-void Database_close();
+void Database_close()
+{
+  if(conn.file) fclose(conn.file);
+  if(conn.db) free(conn.db);
+}
 
 void die(const char *message)
 {
@@ -66,13 +70,6 @@ void Database_open(const char *filename, char mode)
   }
 
   if(!conn.file) die("Failed to open the file");
-}
-
-
-void Database_close()
-{
-  if(conn.file) fclose(conn.file);
-  if(conn.db) free(conn.db);
 }
 
 void Database_write()
