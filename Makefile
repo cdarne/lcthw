@@ -1,6 +1,6 @@
 CC=clang
 CFLAGS=-W -Werror -g
-TARGET_FILES=ex14 ex15 ex16 ex16b ex17
+TARGET_FILES=ex14 ex15 ex16 ex16b ex17 ex18
 
 .PHONY: all clean
 
