@@ -1,10 +1,15 @@
-CC=clang
-CFLAGS=-W -Werror -g
-TARGET_FILES=ex14 ex15 ex16 ex16b ex17 ex18
+include Makefile.inc
+DIRS=ex19
+EXE=ex14 ex15 ex16 ex16b ex17 ex18
 
-.PHONY: all clean
+.PHONY: all clean ex19
 
-all: $(TARGET_FILES)
+all: $(EXE) $(DIRS)
 
 clean:
-	rm -f $(TARGET_FILES) *.dat
+	rm -f $(EXE) *.dat
+	make clean -C ex19
+#	for d in $(DIRS); do $(MAKE) clean -C $d; done
+
+ex19:
+	$(MAKE) $(MFLAGS) -C ex19
