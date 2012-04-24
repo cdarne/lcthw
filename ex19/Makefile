@@ -1,6 +1,6 @@
 include ../Makefile.inc
 EXE=ex19
-OBJ=object.o
+OBJ=object.o game.o
 
 .PHONY: all clean
 
