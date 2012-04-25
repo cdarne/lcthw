@@ -1,6 +1,6 @@
 include Makefile.inc
 DIRS=ex19
-EXE=ex14 ex15 ex16 ex16b ex17 ex18
+EXE=ex14 ex15 ex16 ex16b ex17 ex18 ex20
 
 .PHONY: all clean ex19
 
