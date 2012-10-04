@@ -1,5 +1,5 @@
-#ifndef _ex19_h
-#define _ex19_h
+#ifndef _game_h
+#define _game_h
 
 #include "object.h"
 
@@ -40,6 +40,7 @@ typedef struct Map Map;
 
 void *Map_move(void *self, Direction direction);
 int Map_attack(void *self, int damage);
-int Map_init(void *self);
+
+int process_input(Map *game);
 
 #endif

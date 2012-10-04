@@ -3,28 +3,65 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 
-#include "ex19.h"
+#include "object.h"
+#include "game.h"
 #include "../utils.h"
 
-int Monster_attack(void *self, int damage) {
-	Monster *monster = self;
+Object RoomProto;
+Object MonsterProto;
+Object MapProto;
 
-	printf("You attack %s!\n", monster->_(description));
-	monster->hit_points -= damage;
+int Map_init(void *self) {
+  assert(self != NULL);
+  Map *map = self;
 
-	if(monster->hit_points > 0) {
-		printf("It is still alive.\n");
-		return 0;
-	} else {
-		printf("It is dead!\n");
-		return 1;
-	}
+  // make some rooms for a small 
+  Room *hall = NEW(Room, "The great Hall");
+  Room *throne = NEW(Room, "The throne room");
+  Room *arena = NEW(Room, "The arena, with the minotaur");
+  Room *kitchen = NEW(Room, "Kitchen, you have a knife now");
+
+  // put the bad guy in the arena
+  arena->bad_guy = NEW(Monster, "The evil minotaur");
+
+  // setup the map rooms
+  hall->north = throne;
+
+  throne->west = arena;
+  throne->east = kitchen;
+  throne->south = hall;
+
+  arena->east = throne;
+  kitchen->west = throne;
+
+  // start the map and the character off in the hall
+  map->start = hall;
+  map->location = hall;
+
+  return 1;
 }
 
-int main(int argc, char *argv[]) {
-	USE(argc);
-	USE(argv);
 
-	return 0;
+int main(int argc, char *argv[]) {
+  USE(argc);
+  USE(argv);
+
+  MapProto.init = Map_init;
+
+  // simple way to setup the randomness
+  srand(time(NULL));
+
+  // make our map to work with
+  Map *game = NEW(Map, "The Hall of the Minotaur.");
+
+  printf("You enter the ");
+
+  game->location->_(describe)(game->location);
+
+  while(process_input(game)) {
+  }
+
+  return 0;
 }

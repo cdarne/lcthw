@@ -7,61 +7,68 @@
 #include "../utils.h"
 
 void Object_destroy(void *self) {
-	Object *obj = self;
-	if(obj) {
-		if(obj->description) free(obj->description);
-		free(obj);
-	}
+  assert(self != NULL);
+  Object *obj = self;
+  if(obj) {
+    if(obj->description) free(obj->description);
+    free(obj);
+  }
 }
 
 void Object_describe(void *self) {
-	Object *obj = self;
-	printf("%s.\n", obj->description);
+  assert(self != NULL);
+  Object *obj = self;
+  printf("%s.\n", obj->description);
 }
 
 int Object_init(void *self) {
-	USE(self);
-	// Do nothing really
-	return 1;
+  assert(self != NULL);
+  // Do nothing really
+  return 1;
 }
 
 void *Object_move(void *self, Direction direction) {
-	USE(self);
-	USE(direction);
-	printf("You can't go that direction.\n");
-	return NULL;
+  assert(self != NULL);
+  USE(direction);
+  printf("You can't go that direction.\n");
+  return NULL;
 }
 
 int Object_attack(void *self, int damage) {
-	USE(self);
-	USE(damage);
-	printf("You can't attack that.\n");
-	return 0;
+  assert(self != NULL);
+  USE(damage);
+  printf("You can't attack that.\n");
+  return 0;
 }
 
 void *Object_new(size_t size, Object proto, char *description) {
-	// setup the default functions in case they aren't set
-	if(!proto.init) proto.init = Object_init;
-	if(!proto.describe) proto.describe = Object_describe;
-	if(!proto.destroy) proto.destroy = Object_destroy;
-	if(!proto.attack) proto.attack = Object_attack;
-	if(!proto.move) proto.move = Object_move;
+  assert(description != NULL);
 
-	// This seems weird, but we can make a struct of 'one' size,
-	// then point a different pointer at it to 'cast' it
-	Object *el = calloc(1, size);
-	// Copy the proto struct in el
-	*el = proto;
+  // setup the default functions in case they aren't set
+  if(!proto.init) proto.init = Object_init;
+  if(!proto.describe) proto.describe = Object_describe;
+  if(!proto.destroy) proto.destroy = Object_destroy;
+  if(!proto.attack) proto.attack = Object_attack;
+  if(!proto.move) proto.move = Object_move;
 
-	// copy the description over
-	el->description = strdup(description);
+  // This seems weird, but we can make a struct of 'one' size,
+  // then point a different pointer at it to 'cast' it
+  Object *el = calloc(1, size);
+  assert(el != NULL);
 
-	if(!el->init(el)) {
-		// looks like it didn't initialize properly
-		el->destroy(el);
-		return NULL;
-	} else {
-		// all done, we made an object of any type
-		return el;
-	}
+  // Copy the proto struct in el
+  *el = proto;
+
+  // copy the description over
+  el->description = strdup(description);
+  assert(el->description != NULL);
+
+  if(!el->init(el)) {
+    // looks like it didn't initialize properly
+    el->destroy(el);
+    return NULL;
+  } else {
+    // all done, we made an object of any type
+    return el;
+  }
 }
