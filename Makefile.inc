@@ -1,2 +1,3 @@
+ac_cv_exeext=''
 CC=clang
-CFLAGS=-W -Werror -g
+CFLAGS=-Wall -g

@@ -10,3 +10,4 @@ $(EXE): $(OBJ)
 
 clean:
 	rm -f $(EXE) $(OBJ)
+	rm -Rf *.dSYM
