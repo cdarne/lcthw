@@ -20,7 +20,7 @@ void print_letters(char arg[], size_t len) {
     char ch = arg[i];
 
     if(isprint(ch)) {
-      printf("'%c' == %d", ch, ch);
+      printf("'%c' == %d ", ch, ch);
     }
   }
   printf("\n");
